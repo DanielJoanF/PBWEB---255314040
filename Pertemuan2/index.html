@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Daniel | Web Developer</title>
+    
+</head>
+<body>
+
+    <header>
+        <nav aria-label="Navigasi Utama">
+            <a href="#" class="logo">Portofolio Daniel</a>
+            <ul>
+                <li><a href="#tentang">Tentang</a></li>
+                <li><a href="#keahlian">Keahlian</a></li>
+                <li><a href="#proyek">Proyek</a></li>
+                <li><a href="#kontak">Kontak</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        
+        <section id="tentang" class="hero">
+            <div class="hero-text">
+                <h1>Halo, Saya <strong>Web Developer</strong></h1>
+                <p>Saya seorang pengembang web pemula yang bersemangat dalam mempelajari HTML dasar, CSS, dan teknologi web modern.</p>
+                <a href="#kontak" class="btn">Hubungi Saya</a>
+            </div>
+
+            <img src="daniel.jpeg" alt="Foto Profil Daniel" class="profile-img">
+        </section>
+
+        <section id="keahlian">
+            <h2>Keahlian Saya</h2>
+            <ul class="skills-list">
+                <li>HTML5</li>
+                <li>CSS3 Layouting</li>
+                <li>JavaScript Dasar</li>
+                <li>Responsive Web Design</li>
+                <li>Git & GitHub</li>
+            </ul>
+        </section>
+
+        <section id="proyek">
+            <h2>Proyek Saya</h2>
+            <div class="projects-grid">
+                <article class="project-card">
+                    <figure>
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&auto=format&fit=crop" alt="Tangkapan layar Website Landing Page">
+                        <figcaption class="project-info">
+                            <h3>Website Landing Page</h3>
+                            <p>Dibuat menggunakan HTML5 dasar dan CSS Layouting untuk promosi produk digital.</p>
+                        </figcaption>
+                    </figure>
+                </article>
+
+                <article class="project-card">
+                    <figure>
+                        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=500&auto=format&fit=crop" alt="Tangkapan layar Aplikasi Catatan Web">
+                        <figcaption class="project-info">
+                            <h3>Aplikasi Catatan Web</h3>
+                            <p>Aplikasi web interaktif menggunakan HTML, CSS, dan logika dasar JavaScript.</p>
+                        </figcaption>
+                    </figure>
+                </article>
+
+                <article class="project-card">
+                    <figure>
+                        <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=500&auto=format&fit=crop" alt="Tangkapan layar Desain Portfolio Simple">
+                        <figcaption class="project-info">
+                            <h3>Desain Portfolio Simple</h3>
+                            <p>Tampilan web portofolio pribadi dengan gaya modern dan responsif di berbagai perangkat.</p>
+                        </figcaption>
+                    </figure>
+                </article>
+            </div>
+        </section>
+
+        <section id="kontak">
+            <h2>Hubungi Saya</h2>
+            <form action="#" method="post" class="contact-form" onsubmit="event.preventDefault(); alert('Pesan berhasil dikirim!');">
+                <fieldset>
+                    <legend>Formulir Pesan</legend>
+                    <div class="form-group">
+                        <label for="nama">Nama Lengkap</label>
+                        <input type="text" id="nama" name="nama" placeholder="Masukkan nama Anda" required autocomplete="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="nama@email.com" required autocomplete="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="pesan">Pesan</label>
+                        <textarea id="pesan" name="pesan" rows="4" placeholder="Tuliskan pesan Anda..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn">Kirim Pesan</button>
+                </fieldset>
+            </form>
+        </section>
+
+    </main>
+
+    <footer>
+        <address>
+            <p>Kontak: <a href="mailto:officialdaniel144@gmail.com">officialdaniel144@gmail.com</a></p>
+        </address>
+        <p><small>&copy; <time datetime="2026">2026</time> Portfolio Daniel</small></p>
+    </footer>
+
+</body>
+</html>
+
