@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kalkulator</title>
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #000;
+    --fn: #a5a5a5;
+    --num: #333;
+    --op: #ff9f0a;
+    --op-on: #ffd9a0;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { height: 100%; margin: 0; background: var(--bg); }
+  body {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  }
+  .calc { width: 100%; max-width: 380px; padding: 24px 12px; }
+  #d {
+    color: #fff;
+    text-align: right;
+    font-size: 84px;
+    font-weight: 300;
+    line-height: 1;
+    min-height: 96px;
+    padding: 0 14px 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+  }
+  .pad { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  button {
+    border: 0;
+    border-radius: 999px;
+    aspect-ratio: 1;
+    font-size: 32px;
+    color: #fff;
+    background: var(--num);
+    cursor: pointer;
+    user-select: none;
+  }
+  button:active { filter: brightness(1.3); }
+  .fn { background: var(--fn); color: #000; }
+  .op { background: var(--op); }
+  .op.on { background: var(--op-on); color: var(--op); }
+  .zero { grid-column: span 2; aspect-ratio: auto; text-align: left; padding-left: 32px; }
+</style>
+</head>
+<body>
+<div class="calc">
+  <div id="d">0</div>
+  <div class="pad">
+    <button class="fn" data-k="C" id="c">AC</button>
+    <button class="fn" data-k="n">+/−</button>
+    <button class="fn" data-k="%">%</button>
+    <button class="op" data-k="/">÷</button>
+    <button data-k="7">7</button>
+    <button data-k="8">8</button>
+    <button data-k="9">9</button>
+    <button class="op" data-k="*">×</button>
+    <button data-k="4">4</button>
+    <button data-k="5">5</button>
+    <button data-k="6">6</button>
+    <button class="op" data-k="-">−</button>
+    <button data-k="1">1</button>
+    <button data-k="2">2</button>
+    <button data-k="3">3</button>
+    <button class="op" data-k="+">+</button>
+    <button class="zero" data-k="0">0</button>
+    <button data-k=".">,</button>
+    <button class="op" data-k="=">=</button>
+  </div>
+</div>
+<script>
+  const d = document.getElementById('d');
+  const c = document.getElementById('c');
+  let cur = '0', prev = null, op = null, fresh = true;
+
+  const fmt = s => {
+    const [i, f] = s.split('.');
+    return i.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + (f === undefined ? '' : ',' + f);
+  };
+
+  const render = () => {
+    d.textContent = fmt(cur);
+    d.style.fontSize = Math.max(38, 84 - Math.max(0, cur.length - 8) * 6) + 'px';
+    c.textContent = cur === '0' && op === null ? 'AC' : 'C';
+    document.querySelectorAll('.op').forEach(b => b.classList.toggle('on', fresh && b.dataset.k === op));
+  };
+
+  const calc = () => {
+    const a = +prev, b = +cur;
+    const r = { '+': a + b, '-': a - b, '*': a * b, '/': b ? a / b : NaN }[op];
+    cur = isFinite(r) ? String(+r.toFixed(10)) : 'Error';
+  };
+
+  const press = k => {
+    if (/\d/.test(k)) {
+      if (fresh || cur === '0') cur = k;
+      else if (cur.length < 15) cur += k;
+      fresh = false;
+    } else if (k === '.') {
+      if (fresh) { cur = '0.'; fresh = false; }
+      else if (!cur.includes('.')) cur += '.';
+    } else if (k === 'C') {
+      cur = '0'; prev = null; op = null; fresh = true;
+    } else if (k === 'n') {
+      if (cur !== '0' && cur !== 'Error') cur = cur.startsWith('-') ? cur.slice(1) : '-' + cur;
+    } else if (k === '%') {
+      cur = String(cur / 100);
+    } else if (k === '=') {
+      if (op && prev !== null) { calc(); op = null; prev = null; fresh = true; }
+    } else {
+      if (op && !fresh) calc();
+      prev = cur; op = k; fresh = true;
+    }
+    render();
+  };
+
+  document.querySelector('.pad').addEventListener('click', e => {
+    const k = e.target.closest('button')?.dataset.k;
+    if (k) press(k);
+  });
+
+  addEventListener('keydown', e => {
+    if (e.key === '/') e.preventDefault();
+    if (/^[\d+\-*/]$/.test(e.key)) press(e.key);
+    else if (e.key === '.' || e.key === ',') press('.');
+    else if (e.key === 'Enter' || e.key === '=') press('=');
+    else if (e.key === 'Escape') press('C');
+  });
+
+  render();
+</script>
+</body>
+</html>

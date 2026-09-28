@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis JavaScript</title>
+</head>
+<body>
+    <h1>Kuis JavaScript</h1>
+    <div>
+    <h2>Tugas 1</h2>
+    </div>
+    <form id="form1" class="contact-form" novalidate>
+        <fieldset>
+            <legend>Form Login</legend>
+            <div class="field">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="field">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+        </fieldset>
+        <button type="submit" class="btn">Login</button>
+        <p class="form-note" id="note1" role="status" aria-live="polite" aria-atomic="true"></p>
+    </form>
+
+    <div>
+        <h2>Tugas 2</h2>
+    </div>
+
+    <form id="form2" class="contact-form" novalidate>
+        <fieldset>
+          <legend>Form Register (Validasi Password)</legend>
+          <div class="field">
+            <label for="username2">Username</label>
+            <input type="text" id="username2" name="username2" required>
+          </div>
+          <div class="field">
+            <label for="password2_1">Password Baru</label>
+            <input type="password" id="password2_1" name="password2_1" required>
+          </div>
+          <div class="field">
+            <label for="password2_2">Ulangi Password Baru</label>
+            <input type="password" id="password2_2" name="password2_2" required>
+          </div>
+        </fieldset>
+        <button type="submit" class="btn">Register</button>
+        <p class="form-note" id="note2" role="status" aria-live="polite"></p>
+      </form>
+
+      <div>
+        <h2>Tugas 3</h2>
+      </div>
+
+      <form id="form3" class="contact-form" novalidate>
+        <fieldset>
+          <legend>Form Registrasi Mahasiswa</legend>
+          <div class="field">
+            <label for="nama3">Nama</label>
+            <input type="text" id="nama3" name="nama3" required>
+          </div>
+          <div class="field">
+            <label for="nim3">NIM</label>
+            <input type="text" id="nim3" name="nim3" required>
+          </div>
+          <div class="field">
+            <label for="prodi3">Prodi</label>
+            <input type="text" id="prodi3" name="prodi3" required>
+          </div>
+          <div class="field">
+            <label for="tgl3">Tanggal Lahir (DD-MM-YYYY)</label>
+            <input type="text" id="tgl3" name="tgl3" placeholder="DD-MM-YYYY" required>
+          </div>
+        </fieldset>
+        <button type="submit" class="btn">Submit</button>
+        <p class="form-note" id="note3" role="status" aria-live="polite"></p>
+      </form>
+</body>
+
+<script>
+    // Tugas 1
+    document.getElementById("form1").addEventListener("submit", function(event){
+        event.preventDefault();
+        var u = document.getElementById("username").value;
+        var p = document.getElementById("password").value;
+        var note = document.getElementById("note1");
+        note.style.color = '#f87171';
+
+         if (!u || !p) {
+            note.textContent = 'Username dan Password tidak boleh kosong.';
+            return;
+        }
+        if (u.length !== 6) {
+            note.textContent = 'Username harus memiliki tepat 6 karakter.';
+            return;
+        }
+        if (p.length < 6 || p.length > 8) {
+            note.textContent = 'Password harus terdiri dari 6-8 karakter.';
+            return;
+        }
+        if (u === 'MHS001' && p === 'BasisA') {
+            note.textContent = 'Login berhasil';
+            note.style.color = '#4ade80'; 
+        } else {
+            note.textContent = 'Login gagal';
+        }
+        
+    });
+
+    // Tugas 2
+    document.getElementById("form2").addEventListener("submit", function(event){
+        event.preventDefault();
+        var u2 = document.getElementById("username2").value;
+        var p21 = document.getElementById("password2_1").value;
+        var p22 = document.getElementById("password2_2").value;
+        var note2 = document.getElementById("note2");
+        note2.style.color = '#f87171';
+
+        if (!u2 || !p21 || !p22) {
+            note2.textContent = 'Username, Password baru dan ulangi password baru tidak boleh kosong.';
+            return;
+        }
+        if (u2.length < 6 || u2.length > 8) {
+            note2.textContent = 'Username harus memiliki 6-8 karakter.';
+            return;
+        }
+        if (p21.length < 8 || p22.length < 8) {
+            note2.textContent = 'Password baru dan Ulangi Password baru minimal memiliki 8 karakter.';
+            return;
+        }
+        
+        var hasUpper = /[A-Z]/.test(p21);
+        var hasLower = /[a-z]/.test(p21);
+        var hasNum = /[0-9]/.test(p21);
+        var hasSpecial = /[^A-Za-z0-9]/.test(p21);
+        
+        if (!hasUpper || !hasLower || !hasNum || !hasSpecial) {
+            note2.textContent = 'Password baru harus memiliki minimal: 1 huruf kapital, 1 huruf kecil, 1 angka, dan 1 karakter selain huruf & angka.';
+            return;
+        }
+        
+        if (p21 !== p22) {
+            note2.textContent = 'perbaiki password';
+            return;
+        }
+        
+        note2.textContent = 'Sukses';
+        note2.style.color = '#4ade80';
+        });
+
+        //Tugas 3
+        function isValidDate(dateStr) {
+        if (!/^\d{2}-\d{2}-\d{4}$/.test(dateStr)) return false;
+        var parts = dateStr.split('-');
+        var d = parseInt(parts[0], 10);
+        var m = parseInt(parts[1], 10);
+        var y = parseInt(parts[2], 10);
+        
+        if (m < 1 || m > 12) return false;
+        var daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+        
+        if (y % 400 === 0 || (y % 100 !== 0 && y % 4 === 0)) {
+            daysInMonth[1] = 29;
+        }
+        
+        return d > 0 && d <= daysInMonth[m - 1];
+        }
+
+        document.getElementById('form3').addEventListener('submit', function (e) {
+            e.preventDefault();
+            var n = document.getElementById('nama3').value;
+            var nim = document.getElementById('nim3').value;
+            var p = document.getElementById('prodi3').value;
+            var t = document.getElementById('tgl3').value;
+            var note = document.getElementById('note3');
+            note.style.color = '#f87171';
+            
+            if (!n || !nim || !p || !t) {
+                note.textContent = 'Nama, NIM, Prodi dan tanggal lahir tidak boleh kosong.';
+                return;
+            }
+            if (!/^\d{9}$/.test(nim)) {
+                note.textContent = 'NIM harus berkarakter angka dan terdiri 9 karakter.';
+                return;
+            }
+            if (!/^[0-9\-]+$/.test(t)) {
+                note.textContent = 'Tanggal lahir tidak boleh ada karakter selain angka dan tanda -';
+                return;
+            }
+            if (!isValidDate(t)) {
+                note.textContent = 'Format atau nilai tanggal lahir tidak valid (contoh: 08-11-2001).';
+                return;
+            }
+            
+            note.textContent = 'Sukses Registrasi';
+            note.style.color = '#4ade80';
+        });
+</script>
+</html>
