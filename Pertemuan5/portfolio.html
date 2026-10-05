@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Daniel Joan Fernando — Full-stack Web Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0E1512;
+  --bg-raise: #141F1A;
+  --line: rgba(232,236,231,0.10);
+  --ink: #E7ECE7;
+  --ink-dim: #93A69A;
+  --ink-faint: #5C6E64;
+  --accent: #E8AF4B;
+  --accent-soft: rgba(232,175,75,0.14);
+  --radius: 3px;
+  --sans: "Space Grotesk", -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Tema Terang (Light Mode) */
+body.light-theme {
+  --bg: #F5F7F5;
+  --bg-raise: #FFFFFF;
+  --line: rgba(20, 31, 26, 0.12);
+  --ink: #121A15;
+  --ink-dim: #44564C;
+  --ink-faint: #6D8074;
+  --accent: #B87A14;
+  --accent-soft: rgba(184, 122, 20, 0.12);
+}
+
+*, *::before, *::after { box-sizing: inherit; }
+html { scroll-behavior: smooth; scroll-padding-top: env(safe-area-inset-top, 0px); }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color .25s ease, color .25s ease;
+}
+a { color: inherit; }
+.wrap {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 4vw, 56px);
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: clamp(32px, 6vw, 88px);
+  align-items: start;
+}
+.sidebar {
+  position: sticky;
+  top: 0;
+  padding-top: 64px;
+  padding-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  border-right: 1px solid var(--line);
+}
+.mark {
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  object-fit: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: 14px;
+  color: var(--accent);
+}
+h1.name {
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 1.25;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+.role {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--ink-dim);
+  margin-top: 6px;
+}
+.loc {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-faint);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 4px;
+}
+.loc::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+nav.side-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-family: var(--mono);
+  font-size: 13px;
+}
+nav.side-nav a {
+  text-decoration: none;
+  color: var(--ink-dim);
+  padding: 7px 0;
+  border-bottom: 1px solid transparent;
+  transition: color .15s ease;
+}
+nav.side-nav a:hover, nav.side-nav a:focus-visible {
+  color: var(--ink);
+}
+.side-block {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: var(--ink-faint);
+  line-height: 1.8;
+}
+.side-block a {
+  color: var(--ink-dim);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--ink-faint);
+}
+.side-block a:hover, .side-block a:focus-visible {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+.stack-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 4px 8px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--ink-dim);
+}
+.theme-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg-raise);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 7px 12px;
+  font-family: var(--mono);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all .15s ease;
+}
+.theme-toggle-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+main {
+  padding-top: 64px;
+  padding-bottom: 80px;
+  max-width: 680px;
+}
+section {
+  padding-bottom: 56px;
+  margin-bottom: 56px;
+  border-bottom: 1px solid var(--line);
+}
+section:last-of-type {
+  border-bottom: none;
+}
+.section-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.section-head-with-action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.section-head-with-action > div {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+.section-head h2 {
+  font-size: 19px;
+  font-weight: 600;
+  margin: 0;
+  letter-spacing: -0.005em;
+}
+.section-head span {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-faint);
+}
+.btn-sm {
+  background: var(--bg-raise);
+  color: var(--accent);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  font-family: var(--mono);
+  font-size: 12px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: all .15s ease;
+}
+.btn-sm:hover {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
+.btn-cancel {
+  background: transparent;
+  color: var(--ink-faint);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  font-family: var(--mono);
+  font-size: 12px;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: all .15s ease;
+}
+.btn-cancel:hover {
+  color: var(--ink);
+  border-color: var(--ink-dim);
+}
+.btn-delete {
+  background: transparent;
+  color: var(--ink-faint);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 3px 8px;
+  cursor: pointer;
+  transition: all .15s ease;
+}
+.btn-delete:hover {
+  color: #ef4444;
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.08);
+}
+p.lead {
+  font-size: 16.5px;
+  color: var(--ink);
+  margin: 0 0 14px;
+  max-width: 62ch;
+}
+p.lead:last-child { margin-bottom: 0; }
+.skill-grid {
+  display: grid;
+  gap: 18px;
+}
+.skill-row {
+  display: grid;
+  grid-template-columns: 132px 1fr;
+  gap: 16px;
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+}
+.skill-row:first-child { border-top: none; padding-top: 0; }
+.skill-row dt {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: var(--ink-faint);
+  padding-top: 3px;
+}
+.skill-row dd {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.skill-row dd span {
+  font-size: 14.5px;
+  color: var(--ink);
+  padding: 3px 0;
+}
+.skill-row dd span:not(:last-child)::after {
+  content: "·";
+  margin-left: 8px;
+  color: var(--ink-faint);
+}
+.project-form-wrap {
+  background: var(--bg-raise);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  margin-bottom: 24px;
+  display: none;
+}
+.project-form-wrap.active {
+  display: block;
+  animation: fadeInForm .2s ease-in-out;
+}
+@keyframes fadeInForm {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.form-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+@media (max-width: 600px) {
+  .form-grid-2 { grid-template-columns: 1fr; }
+}
+.projects {
+  display: flex;
+  flex-direction: column;
+}
+.project {
+  padding: 22px 0;
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 8px;
+}
+.project:first-child { border-top: none; padding-top: 0; }
+.project-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.project-head h3 {
+  font-size: 16.5px;
+  font-weight: 600;
+  margin: 0;
+}
+.project-head a.plink {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--accent);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.project-head a.plink:hover, .project-head a.plink:focus-visible {
+  text-decoration: underline;
+}
+.project p {
+  margin: 0;
+  color: var(--ink-dim);
+  font-size: 14.5px;
+  max-width: 58ch;
+}
+.project .ptags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 2px;
+}
+.contact-copy {
+  margin-bottom: 24px;
+}
+form.contact-form {
+  display: grid;
+  gap: 16px;
+  max-width: 480px;
+}
+form.contact-form fieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 16px;
+}
+form.contact-form legend {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+.field {
+  display: grid;
+  gap: 6px;
+}
+.field label {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-faint);
+}
+.field input, .field textarea {
+  background: var(--bg-raise);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 14.5px;
+  padding: 11px 12px;
+  resize: vertical;
+}
+.field input:focus-visible, .field textarea:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+.field textarea { min-height: 108px; }
+button.btn {
+  justify-self: start;
+  background: var(--accent);
+  color: #14100A;
+  border: none;
+  border-radius: var(--radius);
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 12px 22px;
+  cursor: pointer;
+  transition: transform .12s ease, background .12s ease;
+}
+button.btn:hover { background: #f4bd5b; }
+button.btn:active { transform: translateY(1px); }
+button.btn:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.form-note {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-faint);
+  min-height: 16px;
+}
+footer {
+  border-top: 1px solid var(--line);
+}
+.footer-wrap {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 24px clamp(20px, 4vw, 56px) 40px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-faint);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.footer-wrap a {
+  color: var(--ink-faint);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--ink-faint);
+}
+.footer-wrap a:hover, .footer-wrap a:focus-visible {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+@media (max-width: 860px) {
+  .wrap {
+    grid-template-columns: 1fr;
+  }
+  .sidebar {
+    position: static;
+    border-right: none;
+    border-bottom: 1px solid var(--line);
+    padding-top: 40px;
+    padding-bottom: 32px;
+  }
+  main { padding-top: 40px; }
+  nav.side-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 4px 18px;
+  }
+  .skill-row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  button.btn { transition: none; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <aside class="sidebar">
+    <img class="mark" src="niel.jpeg" alt="Daniel Joan Fernando">
+    <div>
+      <h1 class="name">Daniel Joan Fernando</h1>
+      <div class="role">Full-stack web developer</div>
+      <div class="loc">Yogyakarta, Indonesia</div>
+    </div>
+    <nav class="side-nav" aria-label="Navigasi bagian">
+      <a href="#tentang">Tentang</a>
+      <a href="#keahlian">Keahlian</a>
+      <a href="#proyek">Proyek</a>
+      <a href="#kontak">Kontak</a>
+    </nav>
+    <div class="side-block">
+      Mahasiswa Informatika<br>
+      Universitas Sanata Dharma<br>
+      Pendiri, <a href="#proyek">Paingan's WebDev</a>
+    </div>
+    <div class="stack-tags">
+      <span class="tag">Next.js</span>
+      <span class="tag">TypeScript</span>
+      <span class="tag">Supabase</span>
+      <span class="tag">Prisma</span>
+      <span class="tag">Node.js</span>
+      <span class="tag">LLM</span>
+      <span class="tag">JavaScript</span>
+    </div>
+    <div class="side-block">
+      <a href="mailto:officialdaniel144@gmail.com">officialdaniel144@gmail.com</a>
+    </div>
+    <div class="side-block">
+      <button id="theme-toggle" class="theme-toggle-btn" type="button" aria-label="Ganti mode tampilan">
+        <span class="theme-icon" aria-hidden="true">☀️</span>
+        <span class="theme-text">Mode Terang</span>
+      </button>
+    </div>
+  </aside>
+  <main>
+    <section id="tentang">
+      <div class="section-head">
+        <h2>Tentang</h2>
+        <span>01</span>
+      </div>
+      <p class="lead">Saya membangun aplikasi web dari ujung ke ujung. Mulai dari antarmuka, logika backend, struktur basis data, hingga server tempat semuanya berjalan. Sebagian besar pekerjaan saya berada di titik temu antara pengembangan produk dan infrastruktur.</p>
+      <p class="lead">Selain kuliah Informatika di Universitas Sanata Dharma, saya menjalankan Paingan's WebDev, sebuah software house kecil yang mengerjakan proyek web untuk klien, dan aktif mengikuti kompetisi mahasiswa seperti Gemastik.</p>
+    </section>
+    <section id="keahlian">
+      <div class="section-head">
+        <h2>Keahlian</h2>
+        <span>02</span>
+      </div>
+      <dl class="skill-grid">
+        <div class="skill-row">
+          <dt>Frontend</dt>
+          <dd><span>Next.js</span><span>React</span><span>JavaScript</span><span>TypeScript</span><span>Tailwind CSS</span></dd>
+        </div>
+        <div class="skill-row">
+          <dt>Backend & Data</dt>
+          <dd><span>Express.js</span><span>Supabase</span><span>PostgreSQL</span><span>Prisma</span><span>Java</span><span>Python</span><span>Microservice</span><span>Node.js</span></dd>
+        </div>
+        <div class="skill-row">
+          <dt>Infrastruktur</dt>
+          <dd><span>Self-hosting</span><span>Manajemen server</span><span>Deployment</span><span>CI/CD</span></dd>
+        </div>
+        <div class="skill-row">
+          <dt>AI & Riset</dt>
+          <dd><span>Integrasi AI</span><span>RAG</span><span>Analisis data</span><span>LLM</span></dd>
+        </div>
+      </dl>
+    </section>
+    <section id="proyek">
+      <div class="section-head section-head-with-action">
+        <div>
+          <h2>Proyek</h2>
+          <span>03</span>
+        </div>
+        <button type="button" id="btn-toggle-add-form" class="btn-sm">+ Tambah Proyek</button>
+      </div>
+
+      <form id="add-project-form" class="project-form-wrap" novalidate>
+        <h4 style="margin: 0 0 14px; font-size: 14.5px; font-weight: 600; color: var(--ink);">Tambah Item Portofolio Baru</h4>
+        <div class="form-grid-2">
+          <div class="field">
+            <label for="new-title">Nama Proyek *</label>
+            <input type="text" id="new-title" placeholder="Contoh: E-Commerce Store" required>
+          </div>
+          <div class="field">
+            <label for="new-url">URL / Tautan (opsional)</label>
+            <input type="url" id="new-url" placeholder="https://example.com">
+          </div>
+        </div>
+        <div class="field" style="margin-top: 12px;">
+          <label for="new-desc">Deskripsi Proyek *</label>
+          <textarea id="new-desc" placeholder="Tuliskan ringkasan fitur atau peran Anda..." rows="2" style="min-height: 72px;" required></textarea>
+        </div>
+        <div class="field" style="margin-top: 12px;">
+          <label for="new-tags">Teknologi / Stack (pisahkan koma)</label>
+          <input type="text" id="new-tags" placeholder="Contoh: React, TypeScript, Tailwind">
+        </div>
+        <div style="display: flex; gap: 10px; margin-top: 16px; align-items: center; flex-wrap: wrap;">
+          <button type="submit" class="btn" style="padding: 9px 18px; font-size: 12.5px;">Simpan Proyek</button>
+          <button type="button" id="btn-cancel-add" class="btn-cancel">Batal</button>
+          <span id="add-project-msg" class="form-note"></span>
+        </div>
+      </form>
+
+      <div id="project-list" class="projects"></div>
+    </section>
+    <section id="kontak">
+      <div class="section-head">
+        <h2>Kontak</h2>
+        <span>04</span>
+      </div>
+      <p class="lead contact-copy">Terbuka untuk proyek freelance, kolaborasi, atau sekadar diskusi seputar web dan infrastruktur. Kirim pesan lewat formulir ini atau langsung ke email di samping.</p>
+      <form class="contact-form" novalidate>
+        <fieldset>
+          <legend>Formulir pesan</legend>
+          <div class="field">
+            <label for="nama">Nama lengkap</label>
+            <input type="text" id="nama" name="nama" placeholder="Nama Anda" required autocomplete="name">
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="nama@email.com" required autocomplete="email">
+          </div>
+          <div class="field">
+            <label for="pesan">Pesan</label>
+            <textarea id="pesan" name="pesan" placeholder="Tuliskan pesan Anda..." required></textarea>
+          </div>
+        </fieldset>
+        <button type="submit" class="btn">Kirim pesan</button>
+        <p class="form-note" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+  </main>
+</div>
+<footer>
+  <div class="footer-wrap">
+    <span>© 2026 Daniel Joan Fernando</span>
+    <a href="mailto:officialdaniel144@gmail.com">officialdaniel144@gmail.com</a>
+  </div>
+</footer>
+
+<script>
+// 1. DATA ARRAY PORTOFOLIO / PENGALAMAN
+let projects = [
+  {
+    id: 1,
+    title: "Platform HMIF",
+    url: "https://hmif-usd.org",
+    displayUrl: "hmif-usd.org ↗",
+    desc: "Platform web organisasi mahasiswa Informatika, dengan fokus pekerjaan pada optimasi dan refactor halaman kegiatan.",
+    tags: ["Next.js", "Supabase"]
+  },
+  {
+    id: 2,
+    title: "ReMat",
+    url: "https://remat.store",
+    displayUrl: "remat.store ↗",
+    desc: "Marketplace ekonomi sirkular yang mempertemukan pelaku industri untuk memperjualbelikan material limbah, dilengkapi asisten pencarian berbasis RAG.",
+    tags: ["Next.js", "Prisma", "RAG"]
+  },
+  {
+    id: 3,
+    title: "Portfolio Pribadi",
+    url: "https://portfolio-niel-steel.vercel.app/",
+    displayUrl: "niel ↗",
+    desc: "Portfolio Pribadi Saya, yang saya buat dengan menggunakan React dan TypeScript.",
+    tags: ["React", "TypeScript"]
+  },
+  {
+    id: 4,
+    title: "ITDays",
+    url: "http://itdays-usd.com/",
+    displayUrl: "itdays-usd.com ↗",
+    desc: "Website resmi perayaan ITDays Informatika Universitas Sanata Dharma, menampilkan jadwal acara, kompetisi, dan registrasi peserta.",
+    tags: ["React", "Vite", "Tailwind", "Vercel"]
+  }
+];
+
+// Helper untuk escape HTML agar aman dari injection / karakter khusus
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+// 2. RENDER PORTOFOLIO KE DOM DARI ARRAY DATA
+const projectListContainer = document.getElementById('project-list');
+
+function renderProjects() {
+  if (projects.length === 0) {
+    projectListContainer.innerHTML = `
+      <div style="padding: 24px 0; color: var(--ink-faint); font-family: var(--mono); font-size: 13px;">
+        Belum ada item portofolio. Klik tombol <strong>"+ Tambah Proyek"</strong> di atas untuk menambahkan.
+      </div>
+    `;
+    return;
+  }
+
+  projectListContainer.innerHTML = projects.map(function(item) {
+    const linkHtml = item.url 
+      ? `<a class="plink" href="${escapeHtml(item.url)}" target="_blank" rel="noopener">${escapeHtml(item.displayUrl || 'Kunjungi ↗')}</a>` 
+      : '';
+      
+    const tagsHtml = (item.tags || []).map(function(tag) {
+      return `<span class="tag">${escapeHtml(tag)}</span>`;
+    }).join('');
+
+    return `
+      <article class="project" data-id="${item.id}">
+        <div class="project-head">
+          <div style="display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap;">
+            <h3>${escapeHtml(item.title)}</h3>
+            ${linkHtml}
+          </div>
+          <button type="button" class="btn-delete" title="Hapus proyek ini" aria-label="Hapus ${escapeHtml(item.title)}">
+            &times; Hapus
+          </button>
+        </div>
+        <p>${escapeHtml(item.desc)}</p>
+        <div class="ptags">
+          ${tagsHtml}
+        </div>
+      </article>
+    `;
+  }).join('');
+}
+
+renderProjects();
+
+// 3. EVENT DELEGATION: HAPUS ITEM PORTOFOLIO
+projectListContainer.addEventListener('click', function(e) {
+
+  const deleteBtn = e.target.closest('.btn-delete');
+  if (!deleteBtn) return;
+
+  const projectArticle = deleteBtn.closest('.project');
+  if (!projectArticle) return;
+
+  const projectId = parseInt(projectArticle.dataset.id, 10);
+  const targetProject = projects.find(function(p) { return p.id === projectId; });
+  const projectName = targetProject ? targetProject.title : 'item ini';
+
+  // Konfirmasi sebelum menghapus
+  if (confirm(`Apakah Anda yakin ingin menghapus proyek "${projectName}"?`)) {
+    projects = projects.filter(function(p) { return p.id !== projectId; });
+    renderProjects();
+  }
+});
+
+// ==========================================
+// 4. EVENT HANDLING: TAMBAH ITEM DINAMIS
+// ==========================================
+const btnToggleAdd = document.getElementById('btn-toggle-add-form');
+const addProjectForm = document.getElementById('add-project-form');
+const btnCancelAdd = document.getElementById('btn-cancel-add');
+const addProjectMsg = document.getElementById('add-project-msg');
+
+btnToggleAdd.addEventListener('click', function() {
+  const isHidden = !addProjectForm.classList.contains('active');
+  if (isHidden) {
+    addProjectForm.classList.add('active');
+    btnToggleAdd.textContent = '✕ Tutup Form';
+    document.getElementById('new-title').focus();
+  } else {
+    addProjectForm.classList.remove('active');
+    btnToggleAdd.textContent = '+ Tambah Proyek';
+  }
+});
+
+btnCancelAdd.addEventListener('click', function() {
+  addProjectForm.classList.remove('active');
+  btnToggleAdd.textContent = '+ Tambah Proyek';
+  addProjectForm.reset();
+  addProjectMsg.textContent = '';
+});
+
+addProjectForm.addEventListener('submit', function(e) {
+  e.preventDefault();
+  
+  const title = document.getElementById('new-title').value.trim();
+  const url = document.getElementById('new-url').value.trim();
+  const desc = document.getElementById('new-desc').value.trim();
+  const tagsRaw = document.getElementById('new-tags').value.trim();
+
+  // Validasi input
+  if (!title || !desc) {
+    addProjectMsg.style.color = '#ef4444';
+    addProjectMsg.textContent = 'Nama proyek dan deskripsi wajib diisi.';
+    return;
+  }
+
+  // Olah tags
+  const tags = tagsRaw 
+    ? tagsRaw.split(',').map(function(t) { return t.trim(); }).filter(Boolean)
+    : [];
+
+  // Objek proyek baru
+  const newProject = {
+    id: Date.now(), // ID unik menggunakan timestamp
+    title: title,
+    url: url || '',
+    displayUrl: url ? url.replace(/^https?:\/\//, '').replace(/\/$/, '') + ' ↗' : '',
+    desc: desc,
+    tags: tags
+  };
+
+  // Tambahkan item baru ke awal array data
+  projects.unshift(newProject);
+
+  // Render ulang DOM
+  renderProjects();
+
+  // Reset form dan sembunyikan
+  addProjectForm.reset();
+  addProjectMsg.textContent = '';
+  addProjectForm.classList.remove('active');
+  btnToggleAdd.textContent = '+ Tambah Proyek';
+});
+
+// ==========================================
+// 5. TOGGLE DARK / LIGHT MODE & LOCALSTORAGE
+// ==========================================
+const themeToggleBtn = document.getElementById('theme-toggle');
+const themeIcon = themeToggleBtn.querySelector('.theme-icon');
+const themeText = themeToggleBtn.querySelector('.theme-text');
+
+// Baca tema tersimpan dari localStorage
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme === 'light') {
+  document.body.classList.add('light-theme');
+  themeIcon.textContent = '🌙';
+  themeText.textContent = 'Mode Gelap';
+}
+
+themeToggleBtn.addEventListener('click', function() {
+  const isLight = document.body.classList.toggle('light-theme');
+  if (isLight) {
+    themeIcon.textContent = '🌙';
+    themeText.textContent = 'Mode Gelap';
+    localStorage.setItem('theme', 'light');
+  } else {
+    themeIcon.textContent = '☀️';
+    themeText.textContent = 'Mode Terang';
+    localStorage.setItem('theme', 'dark');
+  }
+});
+
+// ==========================================
+// 6. EVENT HANDLING FORM KONTAK
+// ==========================================
+document.querySelector('.contact-form').addEventListener('submit', function (e) {
+  e.preventDefault();
+  const nama = document.getElementById('nama').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const pesan = document.getElementById('pesan').value.trim();
+  const note = this.querySelector('.form-note');
+
+  if (!nama || !email || !pesan) {
+    note.style.color = '#ef4444';
+    note.textContent = 'Semua field formulir kontak wajib diisi.';
+    return;
+  }
+
+  note.style.color = 'var(--accent)';
+  note.textContent = 'Terima kasih, pesan Anda berhasil dikirim!';
+  this.reset();
+});
+</script>
+</body>
+</html>
