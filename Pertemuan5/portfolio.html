@@ -748,9 +748,7 @@ projectListContainer.addEventListener('click', function(e) {
   }
 });
 
-// ==========================================
 // 4. EVENT HANDLING: TAMBAH ITEM DINAMIS
-// ==========================================
 const btnToggleAdd = document.getElementById('btn-toggle-add-form');
 const addProjectForm = document.getElementById('add-project-form');
 const btnCancelAdd = document.getElementById('btn-cancel-add');
@@ -818,9 +816,7 @@ addProjectForm.addEventListener('submit', function(e) {
   btnToggleAdd.textContent = '+ Tambah Proyek';
 });
 
-// ==========================================
 // 5. TOGGLE DARK / LIGHT MODE & LOCALSTORAGE
-// ==========================================
 const themeToggleBtn = document.getElementById('theme-toggle');
 const themeIcon = themeToggleBtn.querySelector('.theme-icon');
 const themeText = themeToggleBtn.querySelector('.theme-text');
@@ -846,9 +842,7 @@ themeToggleBtn.addEventListener('click', function() {
   }
 });
 
-// ==========================================
 // 6. EVENT HANDLING FORM KONTAK
-// ==========================================
 document.querySelector('.contact-form').addEventListener('submit', function (e) {
   e.preventDefault();
   const nama = document.getElementById('nama').value.trim();
