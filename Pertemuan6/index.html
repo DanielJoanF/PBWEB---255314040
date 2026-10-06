@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pendaftaran Mahasiswa Baru – Jalur Reguler</title>
+</head>
+<body>
+
+<h1>Pendaftaran Mahasiswa Baru</h1>
+<p>Universitas Sanata Dharma Yogyakarta – Jalur Reguler</p>
+<p>Isi data dengan jelas dan lengkap. Kolom bertanda * wajib diisi.</p>
+
+<form action="#" method="post">
+
+<!-- A. DATA CALON MAHASISWA DAN ORANGTUA/WALI -->
+<fieldset>
+  <legend>A. Data Calon Mahasiswa dan Orangtua/Wali</legend>
+
+  <p>
+    <label for="nama">Nama lengkap (sesuai STTB/STK) *</label><br>
+    <input type="text" id="nama" name="nama" required autocomplete="name">
+  </p>
+
+  <fieldset>
+    <legend>Jenis kelamin *</legend>
+    <label><input type="radio" name="jenis_kelamin" value="Perempuan" required> Perempuan</label>
+    <label><input type="radio" name="jenis_kelamin" value="Laki-laki"> Laki-laki</label>
+  </fieldset>
+
+  <fieldset>
+    <legend>Status *</legend>
+    <label><input type="radio" name="status" value="Belum menikah" required> Belum menikah</label>
+    <label><input type="radio" name="status" value="Menikah"> Menikah</label>
+    <label><input type="radio" name="status" value="Janda/Duda"> Janda/Duda</label>
+  </fieldset>
+
+  <fieldset>
+    <legend>Agama *</legend>
+    <label><input type="radio" name="agama" value="Islam" required> Islam</label>
+    <label><input type="radio" name="agama" value="Katolik"> Katolik</label>
+    <label><input type="radio" name="agama" value="Kristen"> Kristen</label>
+    <label><input type="radio" name="agama" value="Budha"> Budha</label>
+    <label><input type="radio" name="agama" value="Hindu"> Hindu</label>
+    <label><input type="radio" name="agama" value="Lain-lain"> Lain-lain</label>
+  </fieldset>
+
+  <fieldset>
+    <legend>Kewarganegaraan *</legend>
+    <label><input type="radio" name="kewarganegaraan" value="WNI" required> WNI</label>
+    <label><input type="radio" name="kewarganegaraan" value="WNA"> WNA</label>
+  </fieldset>
+
+  <p>
+    <label for="alamat_surat">Alamat surat (alamat yang mudah dihubungi oleh Pos) *</label><br>
+    <textarea id="alamat_surat" name="alamat_surat" rows="3" cols="40" required autocomplete="street-address"></textarea>
+  </p>
+
+  <fieldset>
+    <legend>Alamat asal</legend>
+    <p>
+      <label for="alamat_asal">Alamat *</label><br>
+      <textarea id="alamat_asal" name="alamat_asal" rows="3" cols="40" required></textarea>
+    </p>
+    <p>
+      <label for="kota">Kabupaten/Kota *</label><br>
+      <input type="text" id="kota" name="kota" required>
+    </p>
+    <p>
+      <label for="provinsi">Provinsi *</label><br>
+      <input type="text" id="provinsi" name="provinsi" required>
+    </p>
+  </fieldset>
+
+  <p>
+    <label for="telp_rumah">No. telepon rumah</label><br>
+    <input type="tel" id="telp_rumah" name="telp_rumah">
+  </p>
+  <p>
+    <label for="hp">No. HP *</label><br>
+    <input type="tel" id="hp" name="hp" required autocomplete="tel">
+  </p>
+  <p>
+    <label for="email">Alamat e-mail *</label><br>
+    <input type="email" id="email" name="email" required autocomplete="email">
+  </p>
+
+  <fieldset>
+    <legend>Orang tua/wali</legend>
+    <p>
+      <label for="nama_ortu">Nama orang tua/wali *</label><br>
+      <input type="text" id="nama_ortu" name="nama_ortu" required>
+    </p>
+    <p>
+      <label for="pendidikan_ortu">Tingkat pendidikan *</label><br>
+      <select id="pendidikan_ortu" name="pendidikan_ortu" required>
+        <option value="">Pilih…</option>
+        <option>Tidak lulus SD</option>
+        <option>SD</option>
+        <option>SLTP</option>
+        <option>SMA</option>
+        <option>Diploma</option>
+        <option>Sarjana Muda</option>
+        <option>Sarjana</option>
+        <option>Magister</option>
+        <option>Doktor</option>
+      </select>
+    </p>
+  </fieldset>
+
+  <fieldset>
+    <legend>Khusus mahasiswa transfer (kosongkan jika bukan transfer)</legend>
+    <p>
+      <label for="pt_asal">Asal perguruan tinggi</label><br>
+      <input type="text" id="pt_asal" name="pt_asal">
+    </p>
+    <p>
+      <label for="prodi_asal">Asal program studi</label><br>
+      <input type="text" id="prodi_asal" name="prodi_asal">
+    </p>
+    <fieldset>
+      <legend>Status akreditasi</legend>
+      <label><input type="radio" name="akreditasi" value="Terakreditasi"> Terakreditasi dengan nilai</label>
+      <input type="text" name="nilai_akreditasi" aria-label="Nilai akreditasi" size="6">
+      <label><input type="radio" name="akreditasi" value="Belum terakreditasi"> Belum terakreditasi</label>
+    </fieldset>
+  </fieldset>
+</fieldset>
+
+<!-- B. PROGRAM STUDI -->
+<fieldset>
+  <legend>B. Program Studi yang Dipilih</legend>
+  <p>Pilih sampai tiga program studi sesuai urutan prioritas. Pilihan I wajib diisi.</p>
+
+  <p>
+    <label for="pilihan1">Pilihan I *</label><br>
+    <select id="pilihan1" name="pilihan1" required>
+      <option value="">Pilih program studi…</option>
+      <optgroup label="Keguruan dan Ilmu Pendidikan">
+        <option>Pendidikan Guru Sekolah Dasar (S1)</option>
+        <option>Bimbingan dan Konseling (S1)</option>
+        <option>Pendidikan Bahasa Inggris (S1)</option>
+        <option>Pendidikan Bahasa, Sastra Indonesia &amp; Daerah (S1)</option>
+        <option>Pendidikan Sejarah (S1)</option>
+        <option>Pendidikan Ekonomi (S1)</option>
+        <option>Pendidikan Akuntansi (S1)</option>
+        <option>Pendidikan Matematika (S1)</option>
+        <option>Pendidikan Fisika (S1)</option>
+        <option>Pendidikan Biologi (S1)</option>
+        <option>Pendidikan Agama Katolik (S1)</option>
+      </optgroup>
+      <optgroup label="Ekonomi">
+        <option>Akuntansi (S1)</option>
+        <option>Manajemen (S1)</option>
+      </optgroup>
+      <optgroup label="Sastra">
+        <option>Sastra Indonesia (S1)</option>
+        <option>Sastra Inggris (S1)</option>
+        <option>Ilmu Sejarah (S1)</option>
+      </optgroup>
+      <optgroup label="Sains dan Teknologi">
+        <option>Mekatronika (D3)</option>
+        <option>Teknik Elektro (S1)</option>
+        <option>Teknik Mesin (S1)</option>
+        <option>Teknik Informatika (S1)</option>
+        <option>Matematika (S1)</option>
+        <option>Fisika (S1)</option>
+      </optgroup>
+      <optgroup label="Farmasi">
+        <option>Farmasi (S1)</option>
+      </optgroup>
+      <optgroup label="Psikologi">
+        <option>Psikologi (S1)</option>
+      </optgroup>
+    </select>
+  </p>
+
+  <p>
+    <label for="pilihan2">Pilihan II</label><br>
+    <select id="pilihan2" name="pilihan2">
+      <option value="">Tidak dipilih</option>
+      <optgroup label="Keguruan dan Ilmu Pendidikan">
+        <option>Pendidikan Guru Sekolah Dasar (S1)</option>
+        <option>Bimbingan dan Konseling (S1)</option>
+        <option>Pendidikan Bahasa Inggris (S1)</option>
+        <option>Pendidikan Bahasa, Sastra Indonesia &amp; Daerah (S1)</option>
+        <option>Pendidikan Sejarah (S1)</option>
+        <option>Pendidikan Ekonomi (S1)</option>
+        <option>Pendidikan Akuntansi (S1)</option>
+        <option>Pendidikan Matematika (S1)</option>
+        <option>Pendidikan Fisika (S1)</option>
+        <option>Pendidikan Biologi (S1)</option>
+        <option>Pendidikan Agama Katolik (S1)</option>
+      </optgroup>
+      <optgroup label="Ekonomi">
+        <option>Akuntansi (S1)</option>
+        <option>Manajemen (S1)</option>
+      </optgroup>
+      <optgroup label="Sastra">
+        <option>Sastra Indonesia (S1)</option>
+        <option>Sastra Inggris (S1)</option>
+        <option>Ilmu Sejarah (S1)</option>
+      </optgroup>
+      <optgroup label="Sains dan Teknologi">
+        <option>Mekatronika (D3)</option>
+        <option>Teknik Elektro (S1)</option>
+        <option>Teknik Mesin (S1)</option>
+        <option>Teknik Informatika (S1)</option>
+        <option>Matematika (S1)</option>
+        <option>Fisika (S1)</option>
+      </optgroup>
+      <optgroup label="Farmasi">
+        <option>Farmasi (S1)</option>
+      </optgroup>
+      <optgroup label="Psikologi">
+        <option>Psikologi (S1)</option>
+      </optgroup>
+    </select>
+  </p>
+
+  <p>
+    <label for="pilihan3">Pilihan III</label><br>
+    <select id="pilihan3" name="pilihan3">
+      <option value="">Tidak dipilih</option>
+      <optgroup label="Keguruan dan Ilmu Pendidikan">
+        <option>Pendidikan Guru Sekolah Dasar (S1)</option>
+        <option>Bimbingan dan Konseling (S1)</option>
+        <option>Pendidikan Bahasa Inggris (S1)</option>
+        <option>Pendidikan Bahasa, Sastra Indonesia &amp; Daerah (S1)</option>
+        <option>Pendidikan Sejarah (S1)</option>
+        <option>Pendidikan Ekonomi (S1)</option>
+        <option>Pendidikan Akuntansi (S1)</option>
+        <option>Pendidikan Matematika (S1)</option>
+        <option>Pendidikan Fisika (S1)</option>
+        <option>Pendidikan Biologi (S1)</option>
+        <option>Pendidikan Agama Katolik (S1)</option>
+      </optgroup>
+      <optgroup label="Ekonomi">
+        <option>Akuntansi (S1)</option>
+        <option>Manajemen (S1)</option>
+      </optgroup>
+      <optgroup label="Sastra">
+        <option>Sastra Indonesia (S1)</option>
+        <option>Sastra Inggris (S1)</option>
+        <option>Ilmu Sejarah (S1)</option>
+      </optgroup>
+      <optgroup label="Sains dan Teknologi">
+        <option>Mekatronika (D3)</option>
+        <option>Teknik Elektro (S1)</option>
+        <option>Teknik Mesin (S1)</option>
+        <option>Teknik Informatika (S1)</option>
+        <option>Matematika (S1)</option>
+        <option>Fisika (S1)</option>
+      </optgroup>
+      <optgroup label="Farmasi">
+        <option>Farmasi (S1)</option>
+      </optgroup>
+      <optgroup label="Psikologi">
+        <option>Psikologi (S1)</option>
+      </optgroup>
+    </select>
+  </p>
+</fieldset>
+
+<!-- C. DATA SEKOLAH -->
+<fieldset>
+  <legend>C. Data SMA/SMK/SMF/MAN</legend>
+
+  <p>
+    <label for="sekolah">Nama sekolah menengah *</label><br>
+    <input type="text" id="sekolah" name="sekolah" required>
+  </p>
+  <p>
+    <label for="telp_sekolah">Telepon sekolah</label><br>
+    <input type="tel" id="telp_sekolah" name="telp_sekolah">
+  </p>
+
+  <fieldset>
+    <legend>Alamat sekolah</legend>
+    <p>
+      <label for="alamat_sekolah">Alamat *</label><br>
+      <textarea id="alamat_sekolah" name="alamat_sekolah" rows="3" cols="40" required></textarea>
+    </p>
+    <p>
+      <label for="kota_sekolah">Kabupaten/Kota *</label><br>
+      <input type="text" id="kota_sekolah" name="kota_sekolah" required>
+    </p>
+    <p>
+      <label for="provinsi_sekolah">Provinsi *</label><br>
+      <input type="text" id="provinsi_sekolah" name="provinsi_sekolah" required>
+    </p>
+  </fieldset>
+
+  <p>
+    <label for="sttb_tahun">Tahun STTB (bagi yang sudah lulus/memiliki ijazah)</label><br>
+    <input type="number" id="sttb_tahun" name="sttb_tahun" min="1990" max="2100">
+  </p>
+
+  <fieldset>
+    <legend>Data NEM/STK/SKHUN</legend>
+    <p>
+      <label for="nem_tahun">Tahun *</label><br>
+      <input type="number" id="nem_tahun" name="nem_tahun" min="1990" max="2100" required>
+    </p>
+    <p>
+      <label for="nem_nilai">Jumlah nilai *</label><br>
+      <input type="number" id="nem_nilai" name="nem_nilai" min="0" step="0.01" required>
+    </p>
+    <p>
+      <label for="nem_mapel">Jumlah mata pelajaran *</label><br>
+      <input type="number" id="nem_mapel" name="nem_mapel" min="1" required>
+    </p>
+  </fieldset>
+
+  <p>
+    <label for="jurusan">Jurusan *</label><br>
+    <select id="jurusan" name="jurusan" required>
+      <option value="">Pilih…</option>
+      <option>SMA IPA</option>
+      <option>SMA IPS</option>
+      <option>SMA Bahasa</option>
+      <option>SMK Ekonomi</option>
+      <option>SMK Teknik</option>
+      <option>SMK Ketrampilan</option>
+      <option>SMF</option>
+      <option>Lain-lain</option>
+    </select>
+  </p>
+
+  <fieldset>
+    <legend>Status sekolah *</legend>
+    <label><input type="radio" name="status_sekolah" value="Negeri" required> Negeri</label>
+    <label><input type="radio" name="status_sekolah" value="Swasta"> Swasta</label>
+  </fieldset>
+</fieldset>
+
+<!-- D. KERINGANAN DPP -->
+<fieldset>
+  <legend>D. Permohonan Keringanan DPP</legend>
+
+  <fieldset>
+    <legend>Keringanan DPP (Dana Pengembangan Pendidikan)</legend>
+    <label><input type="radio" name="dpp" value="Mengajukan"> Saya mengajukan permohonan keringanan DPP</label><br>
+    <label><input type="radio" name="dpp" value="Tidak mengajukan" checked> Saya tidak mengajukan permohonan keringanan DPP</label>
+  </fieldset>
+
+  <fieldset>
+    <legend>Kelengkapan dokumen yang disertakan (jika mengajukan)</legend>
+    <label><input type="checkbox" name="dokumen_dpp" value="Daftar gaji / surat keterangan penghasilan ayah dan ibu"> Daftar gaji ayah dan ibu atau surat keterangan penghasilan ayah dan ibu yang disahkan Ketua RT</label><br>
+    <label><input type="checkbox" name="dokumen_dpp" value="Bukti rekening listrik dan telepon"> Bukti rekening listrik dan telepon</label><br>
+    <label><input type="checkbox" name="dokumen_dpp" value="Surat keterangan tidak mampu"> Surat keterangan tidak mampu dari Ketua RT</label>
+  </fieldset>
+</fieldset>
+
+<!-- E. BEASISWA -->
+<fieldset>
+  <legend>E. Partisipasi Program Beasiswa Universitas Sanata Dharma</legend>
+
+  <label><input type="radio" name="beasiswa" value="Menyumbang"> Saya akan menyumbang dana ke USD untuk beasiswa sebesar Rp</label>
+  <input type="number" name="beasiswa_rp" min="0" aria-label="Jumlah sumbangan dalam rupiah"><br>
+  <label><input type="radio" name="beasiswa" value="Tidak menyumbang" checked> Saya tidak akan menyumbang dana ke USD untuk beasiswa</label>
+</fieldset>
+
+<!-- PERNYATAAN -->
+<fieldset>
+  <legend>Pernyataan</legend>
+  <p>
+    <label>
+      <input type="checkbox" name="pernyataan" value="Setuju" required>
+      Saya menyatakan dengan sesungguhnya bahwa data yang saya isikan dalam formulir ini adalah benar. *
+    </label>
+  </p>
+  <p>
+    <label for="ttd">Nama calon mahasiswa (sebagai tanda tangan) *</label><br>
+    <input type="text" id="ttd" name="ttd" required>
+  </p>
+</fieldset>
+
+<p>
+  <button type="submit">Kirim pendaftaran</button>
+  <button type="reset">Kosongkan</button>
+</p>
+
+</form>
+</body>
+</html>
