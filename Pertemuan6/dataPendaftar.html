@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Pendaftar</title>
+</head>
+<body>
+    <h1>Data Pendaftar</h1>
+<p><a href="pendaftaran.html">Kembali ke formulir</a></p>
+ 
+<p>
+  <label for="cari">Cari (nama, e-mail, atau prodi)</label>
+  <input type="search" id="cari">
+  <span id="jumlah"></span>
+</p>
+ 
+<p>
+  <button type="button" id="muat-ulang">Muat ulang</button>
+  <button type="button" id="ekspor-json">Unduh JSON</button>
+  <button type="button" id="ekspor-csv">Unduh CSV</button>
+  <button type="button" id="hapus-semua">Hapus semua</button>
+</p>
+ 
+<table border="1" cellpadding="4">
+  <thead>
+    <tr>
+      <th>No</th><th>Nama</th><th>E-mail</th><th>HP</th>
+      <th>Pilihan I</th><th>Waktu daftar</th><th>Aksi</th>
+    </tr>
+  </thead>
+  <tbody id="daftar"></tbody>
+</table>
+ 
+<h2>Detail</h2>
+<div id="detail"><p>Pilih “Detail” pada salah satu baris.</p></div>
+</body>
+</html>
