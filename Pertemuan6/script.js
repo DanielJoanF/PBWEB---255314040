@@ -11,188 +11,225 @@ function simpanDataPendaftar(data) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 }
 
+// Escape HTML agar input pengguna tidak merusak tampilan
+function esc(v, cadangan = '-') {
+    if (v === undefined || v === null || v === '') return cadangan;
+    return String(v).replace(/[&<>"']/g, c => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    })[c]);
+}
+
+// Notifikasi melayang (toast)
+function tampilkanNotif(pesan) {
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = pesan;
+    document.body.appendChild(toast);
+    requestAnimationFrame(() => toast.classList.add('show'));
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+    }, 2000);
+}
+
+// Unduh file dari string
+function unduhFile(namaFile, isi, tipe) {
+    const blob = new Blob([isi], { type: tipe });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = namaFile;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 100);
+}
+
+/* HALAMAN PENDAFTARAN (pendaftaran.html)*/
 const formPendaftaran = document.getElementById('form-pendaftaran');
 
 if (formPendaftaran) {
-  formPendaftaran.addEventListener('submit', function (e) {
-    e.preventDefault();
+    formPendaftaran.addEventListener('submit', function (e) {
+        e.preventDefault();
 
-    const formData = new FormData(formPendaftaran);
-    const pendaftar = {};
+        try {
+            const formData = new FormData(formPendaftaran);
+            const pendaftar = {};
 
-    // Membaca input biasa dan radio
-    for (let [key, value] of formData.entries()) {
-      if (key !== 'dokumen_dpp') {
-        pendaftar[key] = value;
-      }
-    }
+            // Input biasa dan radio
+            for (const [key, value] of formData.entries()) {
+                if (key !== 'dokumen_dpp') {
+                    pendaftar[key] = value;
+                }
+            }
 
-    // Membaca multiple checkbox untuk dokumen DPP
-    const dokumenChecked = Array.from(
-      formPendaftaran.querySelectorAll('input[name="dokumen_dpp"]:checked')
-    ).map(cb => cb.value);
-    pendaftar.dokumen_dpp = dokumenChecked;
+            // Checkbox dokumen DPP (bisa lebih dari satu)
+            pendaftar.dokumen_dpp = Array.from(
+                formPendaftaran.querySelectorAll('input[name="dokumen_dpp"]:checked')
+            ).map(cb => cb.value);
 
-    // Menambahkan metadata waktu pendaftaran
-    pendaftar.id = Date.now();
-    pendaftar.waktuDaftar = new Date().toLocaleString('id-ID');
+            // Metadata
+            pendaftar.id = Date.now();
+            pendaftar.waktuDaftar = new Date().toLocaleString('id-ID');
 
-    // Simpan ke array localStorage
-    const listPendaftar = ambilDataPendaftar();
-    listPendaftar.push(pendaftar);
-    simpanDataPendaftar(listPendaftar);
+            // Simpan ke localStorage
+            const listPendaftar = ambilDataPendaftar();
+            listPendaftar.push(pendaftar);
+            simpanDataPendaftar(listPendaftar);
 
-    alert('Pendaftaran berhasil disimpan!');
-    formPendaftaran.reset();
-    window.location.href = 'dataPendaftar.html';
-  });
+            tampilkanNotif('Pendaftaran berhasil terkirim!');
+            formPendaftaran.reset();
+
+            setTimeout(() => {
+                window.location.href = 'dataPendaftar.html';
+            }, 1500);
+        } catch (err) {
+            alert('Gagal menyimpan data: ' + err.message);
+        }
+    });
 }
 
+/*HALAMAN DATA PENDAFTAR (dataPendaftar.html)*/
 const tabelDaftar = document.getElementById('daftar');
 
 if (tabelDaftar) {
-  const inputCari = document.getElementById('cari');
-  const spanJumlah = document.getElementById('jumlah');
-  const btnMuatUlang = document.getElementById('muat-ulang');
-  const btnEksporJson = document.getElementById('ekspor-json');
-  const btnEksporCsv = document.getElementById('ekspor-csv');
-  const btnHapusSemua = document.getElementById('hapus-semua');
-  const containerDetail = document.getElementById('detail');
+    const inputCari = document.getElementById('cari');
+    const spanJumlah = document.getElementById('jumlah');
+    const btnMuatUlang = document.getElementById('muat-ulang');
+    const btnEksporJson = document.getElementById('ekspor-json');
+    const btnEksporCsv = document.getElementById('ekspor-csv');
+    const btnHapusSemua = document.getElementById('hapus-semua');
+    const containerDetail = document.getElementById('detail');
+    const DETAIL_KOSONG = '<p>Pilih “Detail” pada salah satu baris.</p>';
 
-  function renderTabel(keyword = '') {
-    const listPendaftar = ambilDataPendaftar();
-    tabelDaftar.innerHTML = '';
+    function renderTabel(keyword = '') {
+        const listPendaftar = ambilDataPendaftar();
+        const q = keyword.toLowerCase();
 
-    const filtered = listPendaftar.filter(item => {
-      const q = keyword.toLowerCase();
-      return (
-        (item.nama && item.nama.toLowerCase().includes(q)) ||
-        (item.email && item.email.toLowerCase().includes(q)) ||
-        (item.pilihan1 && item.pilihan1.toLowerCase().includes(q))
-      );
-    });
+        const filtered = listPendaftar.filter(item =>
+            (item.nama && item.nama.toLowerCase().includes(q)) ||
+            (item.email && item.email.toLowerCase().includes(q)) ||
+            (item.pilihan1 && item.pilihan1.toLowerCase().includes(q))
+        );
 
-    spanJumlah.textContent = `Total: ${filtered.length} data`;
+        spanJumlah.textContent = `Total: ${filtered.length} data`;
+        tabelDaftar.innerHTML = '';
 
-    if (filtered.length === 0) {
-      tabelDaftar.innerHTML = `<tr><td colspan="7" style="text-align:center;">Tidak ada data pendaftar.</td></tr>`;
-      return;
+        if (filtered.length === 0) {
+            tabelDaftar.innerHTML = `
+                <tr><td colspan="7" class="kosong">
+                    ${listPendaftar.length === 0
+                        ? 'Belum ada pendaftar.'
+                        : 'Tidak ada data yang cocok dengan pencarian.'}
+                </td></tr>`;
+            return;
+        }
+
+        filtered.forEach((item, index) => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${index + 1}</td>
+                <td>${esc(item.nama)}</td>
+                <td>${esc(item.email)}</td>
+                <td>${esc(item.hp)}</td>
+                <td>${esc(item.pilihan1)}</td>
+                <td>${esc(item.waktuDaftar)}</td>
+                <td>
+                    <button class="btn btn-info btn-sm" onclick="lihatDetail(${item.id})">Detail</button>
+                    <button class="btn btn-danger btn-sm" onclick="hapusSatu(${item.id})">Hapus</button>
+                </td>
+            `;
+            tabelDaftar.appendChild(tr);
+        });
     }
 
-    filtered.forEach((item, index) => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${index + 1}</td>
-        <td>${item.nama || '-'}</td>
-        <td>${item.email || '-'}</td>
-        <td>${item.hp || '-'}</td>
-        <td>${item.pilihan1 || '-'}</td>
-        <td>${item.waktuDaftar || '-'}</td>
-        <td>
-          <button class="btn btn-info btn-sm" onclick="lihatDetail(${item.id})">Detail</button>
-          <button class="btn btn-danger btn-sm" onclick="hapusSatu(${item.id})">Hapus</button>
-        </td>
-      `;
-      tabelDaftar.appendChild(tr);
+    // Tampilkan detail satu pendaftar
+    window.lihatDetail = function (id) {
+        const item = ambilDataPendaftar().find(p => p.id === id);
+        if (!item) return;
+
+        const dokumen = item.dokumen_dpp && item.dokumen_dpp.length
+            ? item.dokumen_dpp.map(d => esc(d)).join(', ')
+            : 'Tidak ada';
+
+        containerDetail.innerHTML = `
+            <div class="detail-grid">
+                <strong>Nama:</strong> <span>${esc(item.nama)}</span>
+                <strong>Jenis Kelamin:</strong> <span>${esc(item.jenis_kelamin)}</span>
+                <strong>Status:</strong> <span>${esc(item.status)}</span>
+                <strong>Agama:</strong> <span>${esc(item.agama)}</span>
+                <strong>Kewarganegaraan:</strong> <span>${esc(item.kewarganegaraan)}</span>
+                <strong>Alamat Surat:</strong> <span>${esc(item.alamat_surat)}</span>
+                <strong>Alamat Asal:</strong> <span>${esc(item.alamat_asal)}, ${esc(item.kota)}, ${esc(item.provinsi)}</span>
+                <strong>No. HP:</strong> <span>${esc(item.hp)}</span>
+                <strong>E-mail:</strong> <span>${esc(item.email)}</span>
+                <strong>Orang Tua/Wali:</strong> <span>${esc(item.nama_ortu)} (${esc(item.pendidikan_ortu)})</span>
+                <strong>Asal Perguruan Tinggi:</strong> <span>${esc(item.pt_asal)} (Prodi: ${esc(item.prodi_asal)})</span>
+                <strong>Pilihan Prodi:</strong> <span>1. ${esc(item.pilihan1)}<br>2. ${esc(item.pilihan2)}<br>3. ${esc(item.pilihan3)}</span>
+                <strong>Asal Sekolah:</strong> <span>${esc(item.sekolah)} (${esc(item.status_sekolah)}) – Jurusan ${esc(item.jurusan)}</span>
+                <strong>Permohonan DPP:</strong> <span>${esc(item.dpp)} (Dokumen: ${dokumen})</span>
+                <strong>Sumbangan Beasiswa:</strong> <span>${esc(item.beasiswa)} ${item.beasiswa_rp ? 'Rp ' + esc(item.beasiswa_rp) : ''}</span>
+            </div>
+        `;
+    };
+
+    // Hapus satu data
+    window.hapusSatu = function (id) {
+        if (!confirm('Apakah Anda yakin ingin menghapus data ini?')) return;
+
+        const sisa = ambilDataPendaftar().filter(item => item.id !== id);
+        simpanDataPendaftar(sisa);
+        renderTabel(inputCari.value);
+        containerDetail.innerHTML = DETAIL_KOSONG;
+        tampilkanNotif('Data berhasil dihapus');
+    };
+
+    // Event handler
+    inputCari.addEventListener('input', () => renderTabel(inputCari.value));
+
+    btnMuatUlang.addEventListener('click', () => {
+        inputCari.value = '';
+        renderTabel();
     });
-  }
 
-  // Tampilkan Detail
-  window.lihatDetail = function (id) {
-    const listPendaftar = ambilDataPendaftar();
-    const item = listPendaftar.find(p => p.id === id);
+    btnHapusSemua.addEventListener('click', () => {
+        if (!confirm('Apakah Anda yakin ingin menghapus SELURUH data pendaftar?')) return;
 
-    if (!item) return;
+        localStorage.removeItem(STORAGE_KEY);
+        renderTabel();
+        containerDetail.innerHTML = DETAIL_KOSONG;
+        tampilkanNotif('Semua data berhasil dihapus');
+    });
 
-    containerDetail.innerHTML = `
-      <div class="detail-grid">
-        <strong>Nama:</strong> <span>${item.nama || '-'}</span>
-        <strong>Jenis Kelamin:</strong> <span>${item.jenis_kelamin || '-'}</span>
-        <strong>Status:</strong> <span>${item.status || '-'}</span>
-        <strong>Agama:</strong> <span>${item.agama || '-'}</span>
-        <strong>Kewarganegaraan:</strong> <span>${item.kewarganegaraan || '-'}</span>
-        <strong>Alamat Surat:</strong> <span>${item.alamat_surat || '-'}</span>
-        <strong>Alamat Asal:</strong> <span>${item.alamat_asal || '-'}, ${item.kota || '-'}, ${item.provinsi || '-'}</span>
-        <strong>No. HP:</strong> <span>${item.hp || '-'}</span>
-        <strong>E-mail:</strong> <span>${item.email || '-'}</span>
-        <strong>Orang Tua/Wali:</strong> <span>${item.nama_ortu || '-'} (${item.pendidikan_ortu || '-'})</span>
-        <strong>Asal Perguruan Tinggi:</strong> <span>${item.pt_asal || '-'} (Prodi: ${item.prodi_asal || '-'})</span>
-        <strong>Pilihan Prodi:</strong> <span>1. ${item.pilihan1 || '-'}<br>2. ${item.pilihan2 || '-'}<br>3. ${item.pilihan3 || '-'}</span>
-        <strong>Asal Sekolah:</strong> <span>${item.sekolah || '-'} (${item.status_sekolah || '-'}) - Jurusan ${item.jurusan || '-'}</span>
-        <strong>Permohonan DPP:</strong> <span>${item.dpp || '-'} (Dokumen: ${item.dokumen_dpp ? item.dokumen_dpp.join(', ') : 'Tidak ada'})</span>
-        <strong>Sumbangan Beasiswa:</strong> <span>${item.beasiswa || '-'} ${item.beasiswa_rp ? 'Rp ' + item.beasiswa_rp : ''}</span>
-      </div>
-    `;
-  };
+    // Unduh JSON
+    btnEksporJson.addEventListener('click', () => {
+        const data = JSON.stringify(ambilDataPendaftar(), null, 2);
+        unduhFile('data_pendaftar.json', data, 'application/json');
+    });
 
-  // Hapus Satu Data
-  window.hapusSatu = function (id) {
-    if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
-      let listPendaftar = ambilDataPendaftar();
-      listPendaftar = listPendaftar.filter(item => item.id !== id);
-      simpanDataPendaftar(listPendaftar);
-      renderTabel(inputCari.value);
-      containerDetail.innerHTML = '<p>Pilih “Detail” pada salah satu baris.</p>';
-    }
-  };
+    // Unduh CSV
+    btnEksporCsv.addEventListener('click', () => {
+        const listPendaftar = ambilDataPendaftar();
+        if (listPendaftar.length === 0) {
+            alert('Tidak ada data untuk diunduh.');
+            return;
+        }
 
-  // Event Handlers
-  inputCari.addEventListener('input', () => renderTabel(inputCari.value));
+        const csvCell = v => `"${String(v ?? '').replace(/"/g, '""')}"`;
+        const headers = ['ID', 'Nama', 'Email', 'HP', 'Pilihan 1', 'Sekolah', 'Waktu Daftar'];
+        const rows = listPendaftar.map(p => [
+            p.id,
+            csvCell(p.nama),
+            csvCell(p.email),
+            csvCell(p.hp),
+            csvCell(p.pilihan1),
+            csvCell(p.sekolah),
+            csvCell(p.waktuDaftar)
+        ].join(','));
 
-  btnMuatUlang.addEventListener('click', () => {
-    inputCari.value = '';
+        // BOM di awal agar Excel membaca karakter UTF-8 dengan benar
+        const csv = '\uFEFF' + [headers.join(','), ...rows].join('\n');
+        unduhFile('data_pendaftar.csv', csv, 'text/csv;charset=utf-8;');
+    });
+
+    // Inisialisasi
     renderTabel();
-  });
-
-  btnHapusSemua.addEventListener('click', () => {
-    if (confirm('Apakah Anda yakin ingin menghapus SELURUH data pendaftar?')) {
-      localStorage.removeItem(STORAGE_KEY);
-      renderTabel();
-      containerDetail.innerHTML = '<p>Pilih “Detail” pada salah satu baris.</p>';
-    }
-  });
-
-  // Unduh Data JSON
-  btnEksporJson.addEventListener('click', () => {
-    const data = JSON.stringify(ambilDataPendaftar(), null, 2);
-    const blob = new Blob([data], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'data_pendaftar.json';
-    a.click();
-    URL.revokeObjectURL(url);
-  });
-
-  // Unduh Data CSV
-  btnEksporCsv.addEventListener('click', () => {
-    const listPendaftar = ambilDataPendaftar();
-    if (listPendaftar.length === 0) {
-      alert('Tidak ada data untuk diunduh.');
-      return;
-    }
-
-    const headers = ['ID', 'Nama', 'Email', 'HP', 'Pilihan 1', 'Sekolah', 'Waktu Daftar'];
-    const rows = listPendaftar.map(p => [
-      p.id,
-      `"${p.nama || ''}"`,
-      `"${p.email || ''}"`,
-      `"${p.hp || ''}"`,
-      `"${p.pilihan1 || ''}"`,
-      `"${p.sekolah || ''}"`,
-      `"${p.waktuDaftar || ''}"`
-    ]);
-
-    const csvContent = [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'data_pendaftar.csv';
-    a.click();
-    URL.revokeObjectURL(url);
-  });
-
-  // Inisialisasi awal
-  renderTabel();
 }

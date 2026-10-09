@@ -1,20 +1,18 @@
-/* ==========================================================================
-   Import Google Fonts & Variabel Warna
-   ========================================================================== */
+/*Import Font & Variabel Warna*/
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --primary-color: #0f172a;        /* Dark Slate */
-  --primary-accent: #2563eb;       /* Royal Blue */
-  --primary-hover: #1d4ed8;        /* Darker Blue */
-  --secondary-color: #64748b;      /* Slate Gray */
+  --primary-color: #0f172a;
+  --primary-accent: #2563eb;
+  --primary-hover: #1d4ed8;
+  --secondary-color: #64748b;
   --secondary-hover: #475569;
-  --success-color: #10b981;        /* Emerald Green */
-  --danger-color: #ef4444;         /* Red */
+  --success-color: #10b981;
+  --danger-color: #ef4444;
   --danger-hover: #dc2626;
-  --info-color: #0284c7;           /* Sky Blue */
+  --info-color: #0284c7;
   --info-hover: #0369a1;
-  --bg-main: #f8fafc;              /* Light Gray Background */
+  --bg-main: #f8fafc;
   --bg-card: #ffffff;
   --border-color: #e2e8f0;
   --text-main: #1e293b;
@@ -27,9 +25,7 @@
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
 }
 
-/* ==========================================================================
-   Reset & Elemen Dasar
-   ========================================================================== */
+/*Reset & Elemen Dasar*/
 * {
   box-sizing: border-box;
   margin: 0;
@@ -39,9 +35,14 @@
 body {
   font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   line-height: 1.6;
-  background-color: var(--bg-main);
   color: var(--text-main);
-  padding: 40px 20px;
+  background: linear-gradient(180deg, #e8efff 0%, var(--bg-main) 360px);
+  min-height: 100vh;
+  padding: 40px 16px;
+}
+
+p {
+  margin-bottom: 14px;
 }
 
 .container {
@@ -54,12 +55,10 @@ body {
   border: 1px solid var(--border-color);
 }
 
-/* ==========================================================================
-   Tipografi & Header
-   ========================================================================== */
+/* Tipografi*/
 h1 {
   color: var(--primary-color);
-  font-size: 2.2rem;
+  font-size: 2rem;
   font-weight: 700;
   letter-spacing: -0.02em;
   margin-bottom: 8px;
@@ -67,14 +66,14 @@ h1 {
 
 h2 {
   color: var(--primary-color);
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   font-weight: 600;
   margin-top: 32px;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .subtitle {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 600;
   color: var(--primary-accent);
   margin-bottom: 4px;
@@ -86,34 +85,38 @@ h2 {
   margin-bottom: 28px;
 }
 
-/* ==========================================================================
-   Fieldset & Formulir
-   ========================================================================== */
+/*Fieldset & Formulir*/
 fieldset {
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
-  padding: 24px;
+  padding: 24px 24px 20px;
   margin-bottom: 24px;
   background-color: #ffffff;
   box-shadow: var(--shadow-sm);
-  transition: border-color 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 fieldset:focus-within {
-  border-color: var(--primary-accent);
+  border-color: #bfd3fb;
+  box-shadow: var(--shadow-md);
+}
+
+/* Fieldset di dalam fieldset: tampil lebih ringan */
+fieldset fieldset {
+  box-shadow: none;
+  background-color: #fbfdff;
+  padding: 16px 18px 12px;
+  margin-top: 12px;
+  margin-bottom: 16px;
 }
 
 legend {
   font-weight: 600;
-  font-size: 1.05rem;
+  font-size: 1.02rem;
   color: var(--primary-color);
   padding: 0 10px;
-  background-color: #ffffff;
+  background: inherit;
   border-radius: var(--radius-sm);
-}
-
-.form-group {
-  margin-bottom: 18px;
 }
 
 label {
@@ -122,6 +125,27 @@ label {
   font-weight: 500;
   font-size: 0.95rem;
   color: var(--text-main);
+}
+
+/* Label radio & checkbox tampil sebagai "chip" yang bisa diklik */
+label:has(> input[type="radio"]),
+label:has(> input[type="checkbox"]) {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 12px 10px 0;
+  padding: 6px 12px;
+  font-weight: 400;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+label:has(> input[type="radio"]):hover,
+label:has(> input[type="checkbox"]):hover {
+  background-color: #f1f5f9;
+  border-color: var(--border-color);
 }
 
 input[type="text"],
@@ -142,6 +166,15 @@ textarea {
   transition: all 0.2s ease-in-out;
 }
 
+input[type="text"]:hover,
+input[type="email"]:hover,
+input[type="tel"]:hover,
+input[type="number"]:hover,
+select:hover,
+textarea:hover {
+  border-color: #cbd5e1;
+}
+
 input[type="text"]:focus,
 input[type="email"]:focus,
 input[type="tel"]:focus,
@@ -155,43 +188,36 @@ textarea:focus {
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 
+/* Input pendek yang tampil sejajar dengan teks */
+input[name="nilai_akreditasi"],
+input[name="beasiswa_rp"] {
+  width: auto;
+  max-width: 200px;
+  display: inline-block;
+  margin-left: 4px;
+  vertical-align: middle;
+}
+
 textarea {
   resize: vertical;
 }
 
-/* Radio & Checkbox Groups */
-.radio-group, .checkbox-group {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 8px;
-}
-
-.radio-group label, .checkbox-group label {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 400;
-  cursor: pointer;
-  font-size: 0.95rem;
-}
-
-input[type="radio"], input[type="checkbox"] {
+input[type="radio"],
+input[type="checkbox"] {
   accent-color: var(--primary-accent);
   width: 18px;
   height: 18px;
   cursor: pointer;
 }
 
-/* ==========================================================================
-   Tombol & Navigasi
-   ========================================================================== */
-.actions, .button-toolbar {
+/*Tombol & Navigasi*/
+.actions,
+.button-toolbar {
   display: flex;
+  align-items: center;
   gap: 12px;
-  margin-top: 24px;
-  margin-bottom: 24px;
   flex-wrap: wrap;
+  margin: 28px 0 8px;
 }
 
 .btn {
@@ -202,33 +228,42 @@ input[type="radio"], input[type="checkbox"] {
   border: none;
   border-radius: var(--radius-sm);
   cursor: pointer;
+  font-family: inherit;
   font-weight: 600;
   font-size: 0.95rem;
-  transition: all 0.2s ease;
+  transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
   text-decoration: none;
 }
 
-.btn-primary { background-color: var(--primary-accent); color: white; }
-.btn-primary:hover { background-color: var(--primary-hover); transform: translateY(-1px); }
+.btn:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.35);
+  outline-offset: 2px;
+}
 
-.btn-secondary { background-color: var(--secondary-color); color: white; }
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-primary { background-color: var(--primary-accent); color: #ffffff; box-shadow: var(--shadow-sm); }
+.btn-primary:hover { background-color: var(--primary-hover); box-shadow: var(--shadow-md); transform: translateY(-1px); }
+
+.btn-secondary { background-color: var(--secondary-color); color: #ffffff; }
 .btn-secondary:hover { background-color: var(--secondary-hover); transform: translateY(-1px); }
 
-.btn-info { background-color: var(--info-color); color: white; }
+.btn-info { background-color: var(--info-color); color: #ffffff; }
 .btn-info:hover { background-color: var(--info-hover); transform: translateY(-1px); }
 
-.btn-danger { background-color: var(--danger-color); color: white; }
+.btn-danger { background-color: var(--danger-color); color: #ffffff; }
 .btn-danger:hover { background-color: var(--danger-hover); transform: translateY(-1px); }
 
 .btn-sm {
   padding: 6px 12px;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   margin-right: 4px;
 }
 
 .link-nav {
-  display: inline-inline-block;
-  margin-top: 12px;
+  display: inline-block;
   color: var(--primary-accent);
   text-decoration: none;
   font-weight: 600;
@@ -240,12 +275,10 @@ input[type="radio"], input[type="checkbox"] {
   text-decoration: underline;
 }
 
-/* ==========================================================================
-   Data Pendaftar (dataPendaftar.html)
-   ========================================================================== */
+/* Data Pendaftar (dataPendaftar.html)*/
 .filter-card {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-between;
   gap: 16px;
   background-color: #f1f5f9;
@@ -259,17 +292,20 @@ input[type="radio"], input[type="checkbox"] {
   flex-grow: 1;
 }
 
+.filter-card label {
+  margin-bottom: 6px;
+}
+
 .badge {
   font-weight: 600;
   background: var(--primary-color);
   color: #ffffff;
-  padding: 6px 14px;
+  padding: 8px 16px;
   border-radius: 20px;
   font-size: 0.85rem;
   white-space: nowrap;
 }
 
-/* Tabel Modern */
 .table-responsive {
   overflow-x: auto;
   border-radius: var(--radius-md);
@@ -280,15 +316,18 @@ input[type="radio"], input[type="checkbox"] {
 
 table {
   width: 100%;
+  min-width: 640px;
   border-collapse: collapse;
   background-color: #ffffff;
   text-align: left;
 }
 
-th, td {
+th,
+td {
   padding: 12px 16px;
   border-bottom: 1px solid var(--border-color);
   font-size: 0.92rem;
+  vertical-align: middle;
 }
 
 th {
@@ -296,56 +335,118 @@ th {
   color: var(--secondary-color);
   font-weight: 600;
   text-transform: uppercase;
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   letter-spacing: 0.05em;
   border-bottom: 2px solid var(--border-color);
 }
 
-tr:last-child td {
+tbody tr:last-child td {
   border-bottom: none;
 }
 
-tr:hover td {
+tbody tr:hover td {
   background-color: #f8fafc;
 }
 
-/* Detail Card Box */
+td.kosong {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 32px 16px;
+}
+
+/* Kotak detail */
 .detail-box {
   background-color: #f8fafc;
   border: 1px solid var(--border-color);
   border-left: 4px solid var(--primary-accent);
-  padding: 20px;
+  padding: 20px 24px;
   border-radius: var(--radius-md);
 }
 
 .detail-grid {
   display: grid;
   grid-template-columns: 200px 1fr;
-  gap: 12px 20px;
+  gap: 0 20px;
   font-size: 0.95rem;
+}
+
+.detail-grid > * {
+  padding: 10px 0;
+  border-bottom: 1px dashed var(--border-color);
 }
 
 .detail-grid strong {
   color: var(--secondary-color);
+  font-weight: 600;
 }
 
-/* Responsif untuk Mobile */
+/* Notifikasi (toast)*/
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translate(-50%, 20px);
+  background: var(--primary-color);
+  color: #ffffff;
+  padding: 14px 22px;
+  border-radius: var(--radius-md);
+  border-left: 4px solid var(--success-color);
+  box-shadow: var(--shadow-lg);
+  font-weight: 600;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 1000;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/*Responsif untuk Mobile */
 @media (max-width: 768px) {
+  body {
+    padding: 16px 8px;
+  }
+
   .container {
     padding: 20px;
   }
 
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  fieldset {
+    padding: 18px 16px 14px;
+  }
+
+  label:has(> input[type="radio"]),
+  label:has(> input[type="checkbox"]) {
+    margin-right: 8px;
+  }
+
   .detail-grid {
     grid-template-columns: 1fr;
-    gap: 4px;
   }
 
   .detail-grid strong {
-    margin-top: 8px;
+    padding-bottom: 0;
+    border-bottom: none;
+    margin-top: 6px;
+  }
+
+  .detail-grid > span {
+    padding-top: 2px;
   }
 
   .filter-card {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .actions .btn {
+    flex: 1 1 auto;
   }
 }

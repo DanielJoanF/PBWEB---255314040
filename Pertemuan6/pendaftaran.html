@@ -7,12 +7,12 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
+<div class="container">
 <h1>Pendaftaran Mahasiswa Baru</h1>
-<p>Universitas Sanata Dharma Yogyakarta – Jalur Reguler</p>
-<p>Isi data dengan jelas dan lengkap. Kolom bertanda * wajib diisi.</p>
+<p class="subtitle">Universitas Sanata Dharma Yogyakarta – Jalur Reguler</p>
+<p class="info-text">Isi data dengan jelas dan lengkap. Kolom bertanda * wajib diisi.</p>
 
-<form action="#" method="post">
+<form id="form-pendaftaran" action="#" method="post">
 
 <!-- A. DATA CALON MAHASISWA DAN ORANGTUA/WALI -->
 <fieldset>
@@ -377,12 +377,13 @@
   </p>
 </fieldset>
 
-<p>
-  <button type="submit">Kirim pendaftaran</button>
-  <button type="reset">Kosongkan</button>
-</p>
-<p><a href="dataPendaftar.html">Lihat Data Pendaftar</a></p>
+<div class="actions">
+  <button type="submit" class="btn btn-primary">Kirim pendaftaran</button>
+  <button type="reset" class="btn btn-secondary">Kosongkan</button>
+</div>
+<p><a class="link-nav" href="dataPendaftar.html">Lihat Data Pendaftar →</a></p>
 </form>
 <script src="script.js"></script>
+</div>
 </body>
 </html>
