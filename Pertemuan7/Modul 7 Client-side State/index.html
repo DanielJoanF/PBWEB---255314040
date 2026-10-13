@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog Saya — Modul 6 (Client-side State)</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Blog Belajar Web</h1>
+    <nav>
+      <button id="btn-tema">Mode Gelap</button>
+      <button id="btn-info">Info Tambahan</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Artikel dirender dinamis (jumlah like dimuat dari localStorage) -->
+    <section class="daftar-artikel"></section>
+
+    <aside>
+      <h2>Info Tambahan</h2>
+      <p>Klik tombol "Info Tambahan" untuk menampilkan/menyembunyikan kotak ini.</p>
+    </aside>
+
+    <!-- Form komentar: validasi (Modul 5) + simpan/muat localStorage (Modul 6) -->
+    <section id="komentar">
+      <h2>Tinggalkan Komentar</h2>
+      <form id="form-komentar">
+        <input type="text" id="input-nama" placeholder="Nama Anda"
+               required minlength="3" maxlength="30">
+        <textarea id="input-pesan" placeholder="Tulis komentar..."
+                  required minlength="5" maxlength="200"></textarea>
+        <button type="submit">Kirim</button>
+      </form>
+      <ul id="daftar-komentar"></ul>
+    </section>
+
+    <!-- Form pendaftaran akun (Modul 5) -->
+    <section id="pendaftaran">
+      <h2>Pendaftaran Akun</h2>
+      <form id="form-daftar">
+        <input type="text" id="username" placeholder="Username" required minlength="4">
+        <span class="pesan-error" id="error-username"></span>
+
+        <input type="email" id="email" placeholder="Email" required>
+        <span class="pesan-error" id="error-email"></span>
+
+        <input type="password" id="password" placeholder="Password" required minlength="8">
+        <span class="pesan-error" id="error-password"></span>
+
+        <input type="password" id="konfirmasi" placeholder="Konfirmasi Password" required>
+        <span class="pesan-error" id="error-konfirmasi"></span>
+
+        <button type="submit">Daftar</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Blog Belajar Web. Tekan "d" untuk beralih mode gelap.</p>
+    <!-- Modul 6 · B.6 -->
+    <button id="btn-reset">Reset Semua Data</button>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

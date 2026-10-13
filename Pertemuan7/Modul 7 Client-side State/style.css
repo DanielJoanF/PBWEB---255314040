@@ -1,0 +1,78 @@
+/* ===== Base (lanjutan Modul 1-5) ===== */
+* { box-sizing: border-box; }
+
+body {
+  font-family: system-ui, Arial, sans-serif;
+  line-height: 1.6; margin: 0;
+  color: #1a1a1a; background-color: #ffffff;
+}
+
+header, main, footer { padding: 1rem 1.25rem; }
+
+header {
+  display: flex; flex-wrap: wrap; align-items: center;
+  justify-content: space-between; gap: 0.75rem;
+  border-bottom: 1px solid #ddd;
+}
+nav { display: flex; gap: 0.5rem; }
+
+button {
+  cursor: pointer; padding: 0.4rem 0.8rem;
+  border: 1px solid #888; border-radius: 6px;
+  background: #f2f2f2; font: inherit;
+}
+
+.daftar-artikel { display: grid; gap: 1rem; margin-bottom: 1.5rem; }
+article {
+  border: 1px solid #e0e0e0; border-radius: 8px; padding: 1rem;
+  transition: background-color 0.15s ease;
+}
+article h3 { margin: 0 0 0.25rem; }
+article time { color: #666; font-size: 0.9rem; display: block; margin-bottom: 0.5rem; }
+article button { margin-right: 0.5rem; margin-top: 0.5rem; }
+
+aside {
+  border: 1px dashed #bbb; border-radius: 8px; padding: 1rem;
+  background: #fafafa; margin-bottom: 1.5rem;
+}
+
+/* ===== Form (komentar & pendaftaran) ===== */
+#komentar form, #form-daftar { display: grid; gap: 0.5rem; max-width: 480px; }
+#komentar input, #komentar textarea,
+#form-daftar input {
+  padding: 0.5rem; border: 2px solid #bbb; border-radius: 6px; font: inherit;
+}
+#komentar textarea { min-height: 90px; resize: vertical; }
+#daftar-komentar { padding-left: 1.1rem; }
+#daftar-komentar li { margin: 0.25rem 0; }
+#pendaftaran { margin-top: 1.5rem; }
+form button[type="submit"] { justify-self: start; }
+
+/* ===== Modul 5 · B.3 — Styling status valid/invalid ===== */
+#form-komentar input:valid, #form-komentar textarea:valid,
+#form-daftar input:valid { border-color: #5cb85c; }
+#form-komentar input:invalid:not(:placeholder-shown),
+#form-komentar textarea:invalid:not(:placeholder-shown),
+#form-daftar input:invalid:not(:placeholder-shown) { border-color: #d9534f; }
+
+/* ===== Modul 5 · B.6 — Pesan error per field ===== */
+.pesan-error { color: #d9534f; font-size: 0.85em; display: block; min-height: 1em; }
+
+/* ===== Modul 4 · B.2 — Efek hover artikel ===== */
+.artikel-hover { background-color: #eef4fb; }
+
+/* ===== Modul 6 · B.6 — Tombol reset ===== */
+#btn-reset { margin-top: 0.5rem; border-color: #d9534f; color: #d9534f; }
+
+/* ===== Modul 3 · B.3 — Tema gelap ===== */
+body.dark-mode { background-color: #1a1a1a; color: #f2f2f2; }
+body.dark-mode article,
+body.dark-mode aside,
+body.dark-mode #komentar input,
+body.dark-mode #komentar textarea,
+body.dark-mode #form-daftar input { background: #222; color: #f2f2f2; }
+body.dark-mode button { background: #333; color: #f2f2f2; border-color: #666; }
+body.dark-mode .artikel-hover { background-color: #2a3340; }
+
+/* ===== Modul 3 · B.4 — Sembunyikan elemen ===== */
+.tersembunyi { display: none; }
