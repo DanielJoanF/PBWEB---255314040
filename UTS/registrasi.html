@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrasi</title>
+    <style>
+        .sukses { color: green; }
+        .gagal { color: red; }
+    </style>
+</head>
+<body>
+    <h1>Registrasi Peserta Seminar IT Days</h1>
+    <form id="form-registrasi">
+        <label for="nama">Nama Lengkap</label>
+        <input type="text" id="nama">
+        <label for="email">Email</label>
+        <input type="text" id="email">
+        <label for="password">Password</label>
+        <input type="password" id="password">
+        <label for="konfirmasi">Konfirmasi Password</label>
+        <input type="password" id="konfirmasi">
+        <button type="submit">Daftar</button>
+    </form>
+    <ul id="daftar-error" class="gagal"></ul>
+    <p id="pesan" class="sukses"></p>
+
+    <script>
+        const form = document.getElementById('form-registrasi');
+        const daftarError = document.getElementById('daftar-error');
+        const pesan = document.getElementById('pesan');
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const nama = document.getElementById('nama').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const konfirmasi = document.getElementById('konfirmasi').value;
+
+            const errors = [];
+
+            // 1. Nama tidak boleh kosong
+            if (nama === '') {
+                errors.push('Nama wajib diisi');
+            }
+
+            // 2. Email harus mengandung karakter @
+            if (!email.includes('@')) {
+                errors.push('Email harus mengandung @');
+            }
+
+            // 3. Password minimal 6 karakter
+            if (password.length < 6) {
+                errors.push('Password minimal 6 karakter');
+            }
+
+            // 4. Konfirmasi password harus sama dengan password
+            if (konfirmasi !== password) {
+                errors.push('Konfirmasi password tidak sama');
+            }
+
+            // Bersihkan pesan kesalahan dan pesan sukses dari percobaan sebelumnya
+            daftarError.innerHTML = '';
+            pesan.textContent = '';
+
+            if (errors.length > 0) {
+                // Tampilkan semua pesan kesalahan sebagai item li di dalam ul#daftar-error
+                errors.forEach(function (err) {
+                    const li = document.createElement('li');
+                    li.textContent = err;
+                    daftarError.appendChild(li);
+                });
+            } else {
+                // Tampilkan pesan sukses dan kosongkan form
+                pesan.textContent = 'Registrasi berhasil. Selamat bergabung, ' + nama + '!';
+                form.reset();
+            }
+        });
+    </script>
+</body>
+</html>
