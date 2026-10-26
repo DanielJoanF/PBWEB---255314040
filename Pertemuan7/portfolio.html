@@ -553,6 +553,9 @@ footer {
         <span class="theme-text">Mode Terang</span>
       </button>
     </div>
+    <div class="side-block">
+      Halo, <span id="nama-pengguna" style="color: var(--accent);">Tamu</span>
+    </div>
   </aside>
   <main>
     <section id="tentang">
@@ -703,6 +706,18 @@ let projects = savedProject !== null ? JSON.parse(savedProject) : defaultProject
 
 function saveProjects(){
   localStorage.setItem('projects', JSON.stringify(projects));
+}
+
+// Inisialisasi data pengguna di localStorage jika belum ada
+if (!localStorage.getItem('pengguna')) {
+  localStorage.setItem('pengguna', JSON.stringify({ nama: 'Tamu' }));
+}
+const pengguna = JSON.parse(localStorage.getItem('pengguna'));
+
+// Tampilkan nama pengguna di sidebar jika elemen tersedia
+const elNamaPengguna = document.getElementById('nama-pengguna');
+if (elNamaPengguna && pengguna && pengguna.nama) {
+  elNamaPengguna.textContent = pengguna.nama;
 }
 
 // Likes storage
