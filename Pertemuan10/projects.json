@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "title": "Platform HMIF",
+    "url": "https://hmif-usd.org",
+    "displayUrl": "hmif-usd.org ↗",
+    "desc": "Platform web organisasi mahasiswa Informatika, dengan fokus pekerjaan pada optimasi dan refactor halaman kegiatan.",
+    "tags": ["Next.js", "Supabase"]
+  },
+  {
+    "id": 2,
+    "title": "ReMat",
+    "url": "https://remat.store",
+    "displayUrl": "remat.store ↗",
+    "desc": "Marketplace ekonomi sirkular yang mempertemukan pelaku industri untuk memperjualbelikan material limbah, dilengkapi asisten pencarian berbasis RAG.",
+    "tags": ["Next.js", "Prisma", "RAG"]
+  },
+  {
+    "id": 3,
+    "title": "Portfolio Pribadi",
+    "url": "https://portfolio-niel-steel.vercel.app/",
+    "displayUrl": "niel ↗",
+    "desc": "Portfolio Pribadi Saya, yang saya buat dengan menggunakan React dan TypeScript.",
+    "tags": ["React", "TypeScript"]
+  },
+  {
+    "id": 4,
+    "title": "ITDays",
+    "url": "http://itdays-usd.com/",
+    "displayUrl": "itdays-usd.com ↗",
+    "desc": "Website resmi perayaan ITDays Informatika Universitas Sanata Dharma, menampilkan jadwal acara, kompetisi, dan registrasi peserta.",
+    "tags": ["React", "Vite", "Tailwind", "Vercel"]
+  }
+]
